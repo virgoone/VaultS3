@@ -1,4 +1,4 @@
-name: Publish Evumi VaultS3
+name: Publish fixed VaultS3
 
 on:
   push:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   publish:
-    if: github.repository == 'evumi/VaultS3'
+    if: github.repository == 'virgoone/VaultS3'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -35,10 +35,10 @@ jobs:
           file: Dockerfile.evumi
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/evumi/vaults3:sha-${{ github.sha }}
+          tags: ghcr.io/virgoone/vaults3:sha-${{ github.sha }}
           build-args: VERSION=v5.0.7-evumi-${{ github.sha }}
           labels: |
-            org.opencontainers.image.source=https://github.com/evumi/VaultS3
+            org.opencontainers.image.source=https://github.com/virgoone/VaultS3
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=AGPL-3.0
           cache-from: type=gha,scope=evumi-vaults3
@@ -47,4 +47,4 @@ jobs:
         env:
           IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
         run: |
-          echo "ghcr.io/evumi/vaults3@${IMAGE_DIGEST}" >> "$GITHUB_STEP_SUMMARY"
+          echo "ghcr.io/virgoone/vaults3@${IMAGE_DIGEST}" >> "$GITHUB_STEP_SUMMARY"
